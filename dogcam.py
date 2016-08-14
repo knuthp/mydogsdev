@@ -9,10 +9,10 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 try:   
     from picamera import PiCamera
-    logging.info("Using PiCamera")
-#     import capturerpi.CaptureRaspberryPi
-#     capture = CaptureRaspberryPi
-except ImportError:
+    logging.info("A Using PiCamera")
+    from capturerpi import CaptureRaspberryPi
+    capture = CaptureRaspberryPi()
+except ImportError as e:
     logging.info("Using OpenCV camera")    
     from captureopencv import CaptureOpenCv
     capture = CaptureOpenCv()
@@ -32,6 +32,6 @@ while True:
     except ConnectionError as e:
         logging.exception("Failed to upload file", e)
     except Exception as e:
-        logging.exception("Unexpected exception", e)
+        logging.exception("Unexpected exception")
     
     sleep(60 * 5)

@@ -1,20 +1,33 @@
 from io import BytesIO
+from time import sleep
+
 try :
     from picamera import PiCamera
-
+    print("OK Import")
 
     class CaptureRaspberryPi:
         def __init__(self):
-            self.my_stream = BytesIO()
-            self.camera = PiCamera
-            self.camera.resolution = (1024, 768)
+            self.camera = PiCamera()
         
         def captureImage(self):
-            self.camera.capture(self.my_stream, 'jpg', resize=(640, 480))
-            return self.my_stream.getvalue()
+            my_stream = BytesIO()
+            self.camera.start_preview()
+            sleep(2)
+            self.camera.capture(my_stream, 'jpeg')
+            return my_stream.getvalue()
 
             
 
 except ImportError:
+    print("ERROR")
     pass
-    
+
+
+if __name__ == '__main__':
+    capture = CaptureRaspberryPi()
+    imgStr = capture.captureImage()    
+    print(len(imgStr))
+    imgFile = open('myImg.jpg', 'w')
+    imgFile.write(imgStr)
+    imgFile.close()
+   
