@@ -21,6 +21,3 @@ class Test(unittest.TestCase):
         self.access_key = os.environ.get('DROPBOX_ACCCESS_TOKEN')
 
 
-if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
-    unittest.main()
